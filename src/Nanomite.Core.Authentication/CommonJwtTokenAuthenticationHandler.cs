@@ -161,15 +161,14 @@ namespace Nanomite.Core.Authentication
         /// <returns>The <see cref="Task{ClaimsIdentity}"/></returns>
         private async Task<ClaimsIdentity> GetUserIdentity(string userForeignId, string password)
         {
-            bool nfc = false;
-            string token = await this.userAccessFunction.Invoke(userForeignId, password);
+            string userId = await this.userAccessFunction.Invoke(userForeignId, password);
 
-            if (string.IsNullOrEmpty(token))
+            if (string.IsNullOrEmpty(userId))
             {
                 return null;
             }
 
-            return new ClaimsIdentity(new GenericIdentity(token, "Token"), new Claim[] { });
+            return new ClaimsIdentity(new GenericIdentity(userId, "Token"), new Claim[] { });
         }
 
         /// <summary>
